@@ -100,7 +100,7 @@ model PerfilEstudiante{
 model Curso{
 	id        Int      @id @default(autoincrement())
 	nombre String
-	Academico   Academico?
+	academico   Academico?
   asignatura Asignatura[]
 }
 
