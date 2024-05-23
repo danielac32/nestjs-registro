@@ -24,31 +24,6 @@ model userEntity {
 }
 
 
-model Representante{
-	id        Int      @id @default(autoincrement())
-	madre      String
-	cedulaM     String  
-	telefonoM String
-	emailM String
-	profesionM String
-	viveConEstuanteM Boolean
-
-	padre      String
-	cedulaP     String  
-	telefonoP String
-	emailP String
-	profesionP String
-	viveConEstuanteP Boolean
-
-	numEmergencia String
-	parentesco String // de la persona a llamar
-
-	nombreRepresentante String //que la inscribe
-	estudiante EstudianteEntity[]
-	createdAt  DateTime @default(now())
-}
- 
-
 model Academico {
   id        Int      @id @default(autoincrement())
   fechaEscolarDesde DateTime
@@ -76,24 +51,8 @@ model Retiro{
 	cedulaResponsable String 
 	cargoResponsable String
 	estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
-  id_estudiante   Int @unique
+  	id_estudiante   Int @unique
 	createdAt  DateTime @default(now())
-}
-
-model PerfilEstudiante{
-	  id        Int      @id @default(autoincrement())
-	  name      String
-	  email     String   @unique
-	  isActive  Boolean  @default(true)
-	  cedula     String  
-	  cedulaEscolar     String  
-    origen 	String
-	  direcion String
-	  telefono String
-	  medicina Boolean @default(false)
-	  alergia Boolean  @default(false)
-	  estudiante EstudianteEntity?
-	  createdAt  DateTime @default(now())
 }
 
 
@@ -101,7 +60,7 @@ model Curso{
 	id        Int      @id @default(autoincrement())
 	nombre String
 	academico   Academico?
-  asignatura Asignatura[]
+    asignatura Asignatura[]
 }
 
 model Asignatura{
@@ -110,7 +69,7 @@ model Asignatura{
     profesor String 
     curso   Curso? @relation(fields: [cursoId], references: [id])
     cursoId Int
-	  notas Notas[]
+	notas Notas[]
 }
 
 model Notas {         
@@ -121,6 +80,47 @@ model Notas {
 }
 
 
+
+model PerfilEstudiante{
+	  id        Int      @id @default(autoincrement())
+	  name      String
+	  email     String   @unique
+	  isActive  Boolean  @default(true)
+	  cedula     String  
+	  cedulaEscolar     String  
+      origen 	String
+	  direcion String
+	  telefono String
+	  medicina Boolean @default(false)
+	  alergia Boolean  @default(false)
+	  estudiante EstudianteEntity?
+	  createdAt  DateTime @default(now())
+}
+
+model Representante{
+	id        Int      @id @default(autoincrement())
+	madre      String
+	cedulaM     String  
+	telefonoM String
+	emailM String
+	profesionM String
+	viveConEstuanteM Boolean
+
+	padre      String
+	cedulaP     String  
+	telefonoP String
+	emailP String
+	profesionP String
+	viveConEstuanteP Boolean
+
+	numEmergencia String
+	parentesco String // de la persona a llamar
+
+	nombreRepresentante String //que la inscribe
+	estudiante EstudianteEntity[]
+	createdAt  DateTime @default(now())
+}
+ 
 model EstudianteEntity {
   id        Int      @id @default(autoincrement())
   
