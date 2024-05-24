@@ -256,7 +256,7 @@ export class CreateEstudianteDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => AcademicoDto)
-  academicoDto: AcademicoDto;
+  academico: AcademicoDto;
   
   @ApiProperty()
   @IsOptional()

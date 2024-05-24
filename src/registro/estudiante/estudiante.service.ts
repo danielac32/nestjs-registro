@@ -15,7 +15,7 @@ export class EstudianteService {
   async create(createEstudianteDto: CreateEstudianteDto) {
     
     try{
-      const { perfilEstudiante, representante , academicoDto } = createEstudianteDto;
+      const { perfilEstudiante, representante , academico } = createEstudianteDto;
       const estudianteData = {
         perfil: {
           create: perfilEstudiante,
@@ -26,17 +26,19 @@ export class EstudianteService {
       };
 
 
-      const {materiasAprobadas,materiasAplazadas,...data}=academicoDto;
+      const {materiasAprobadas,materiasAplazadas,...data}=academico;
       const res = await this.prisma.estudianteEntity.create({
-        data: {
-            ...estudianteData,
-            recordAcademico: {
-              create: {...data}, // Pass the entire academico object
-            },
-        }
+        data: estudianteData
       });
       
-     
+      const newAcademico = await this.prisma.academico.create({
+          data: {
+            ...data,
+            id_estudiante:res.id,
+            
+          }
+      });
+      
       
 
       return {
