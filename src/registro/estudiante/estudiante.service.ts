@@ -12,39 +12,36 @@ export class EstudianteService {
     ) {}
 
 
-  async create(createPerfilEstudianteDto: CreatePerfilEstudianteDto, createRepresentanteDto: CreateRepresentanteDto,academicoDto:AcademicoDto) {
+  async create(createEstudianteDto: CreateEstudianteDto) {
+    
     try{
-        const estudianteData = {
-          perfil: {
-            create: createPerfilEstudianteDto,
-          },
-          representante: {
-            create: createRepresentanteDto,
-          },
-        };
+      const { perfilEstudiante, representante , academicoDto } = createEstudianteDto;
+      const estudianteData = {
+        perfil: {
+          create: perfilEstudiante,
+        },
+        representante: {
+          create: representante,
+        },
+      };
 
-        const res = await this.prisma.estudianteEntity.create({
-          data: estudianteData
-        });
-             //console.log(new Date())
-            //console.log(academicoDto.materiasAprobadas)
-            //console.log(academicoDto.materiasAplazadas)
-       const newAcademico = await this.prisma.academico.create({
-          data: {
-               ...academicoDto,
-               id_estudiante:res.id,
-               materiasAprobadas: {
-                 create: academicoDto.materiasAprobadas,
-               },
-               materiasAplazadas: {
-                 create: academicoDto.materiasAplazadas,
-               }
-          },
-        });
-        
-        return{
-          status:"ok"
+
+      const {materiasAprobadas,materiasAplazadas,...data}=academicoDto;
+      const res = await this.prisma.estudianteEntity.create({
+        data: {
+            ...estudianteData,
+            recordAcademico: {
+              create: {...data}, // Pass the entire academico object
+            },
         }
+      });
+      
+     
+      
+
+      return {
+        status:"ok"
+      }
     }catch(error){
         console.log(error)
         throw new HttpException('Error creating student', 500);
@@ -59,8 +56,9 @@ export class EstudianteService {
             representante:true,
             recordAcademico:{
               include:{
-                materiasAprobadas:true,
-                materiasAplazadas:true
+                //materiasAprobadas:true,
+               // materiasAplazadas:true,
+                //curso: true,
               }
             },
             retiro:true

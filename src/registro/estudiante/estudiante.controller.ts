@@ -10,8 +10,8 @@ export class EstudianteController {
 
   @Post()
   async create(@Body() createEstudianteDto: CreateEstudianteDto) {
-    const { perfilEstudiante, representante , academico } = createEstudianteDto;
-    return this.estudianteService.create(perfilEstudiante, representante ,academico);
+    //const { perfilEstudiante, representante , academico } = createEstudianteDto;
+    return this.estudianteService.create(createEstudianteDto);
   }
 
   @Get()

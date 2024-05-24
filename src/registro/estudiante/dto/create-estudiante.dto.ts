@@ -142,10 +142,7 @@ export class MateriasAprobadasDto {
   @IsString()
   nombre: string;
   
-  @IsOptional()
-  @IsInt()
-  academicoId?: number; // Optional if not creating a new approved subject within an academic record
-}
+  }
 
 export class MateriasAplazadasDto {
 
@@ -154,10 +151,7 @@ export class MateriasAplazadasDto {
   @IsString()
   nombre: string;
   
-  @IsOptional()
-  @IsInt()
-  academicoId?: number; // Optional if not creating a new failed subject within an academic record
-}
+  }
 
 export class AcademicoDto {
 
@@ -184,17 +178,15 @@ export class AcademicoDto {
 
  
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @ValidateNested()
-  @Type(() => MateriasAprobadasDto)
-  materiasAprobadas: MateriasAprobadasDto[]=[];
+  materiasAprobadas: MateriasAprobadasDto[];
 
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @ValidateNested()
-  @Type(() => MateriasAplazadasDto)
-  materiasAplazadas: MateriasAplazadasDto[]=[];
+  materiasAplazadas: MateriasAplazadasDto[];
 
   @ApiProperty()
   @IsBoolean()
@@ -264,7 +256,7 @@ export class CreateEstudianteDto {
   @IsOptional()
   @ValidateNested()
   @Type(() => AcademicoDto)
-  academico: AcademicoDto;
+  academicoDto: AcademicoDto;
   
   @ApiProperty()
   @IsOptional()
