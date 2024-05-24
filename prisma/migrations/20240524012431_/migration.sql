@@ -10,27 +10,6 @@ CREATE TABLE "userEntity" (
 );
 
 -- CreateTable
-CREATE TABLE "Representante" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "madre" TEXT NOT NULL,
-    "cedulaM" TEXT NOT NULL,
-    "telefonoM" TEXT NOT NULL,
-    "emailM" TEXT NOT NULL,
-    "profesionM" TEXT NOT NULL,
-    "viveConEstuanteM" BOOLEAN NOT NULL,
-    "padre" TEXT NOT NULL,
-    "cedulaP" TEXT NOT NULL,
-    "telefonoP" TEXT NOT NULL,
-    "emailP" TEXT NOT NULL,
-    "profesionP" TEXT NOT NULL,
-    "viveConEstuanteP" BOOLEAN NOT NULL,
-    "numEmergencia" TEXT NOT NULL,
-    "parentesco" TEXT NOT NULL,
-    "nombreRepresentante" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- CreateTable
 CREATE TABLE "Academico" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "fechaEscolarDesde" DATETIME NOT NULL,
@@ -62,22 +41,6 @@ CREATE TABLE "Retiro" (
 );
 
 -- CreateTable
-CREATE TABLE "PerfilEstudiante" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "cedula" TEXT NOT NULL,
-    "cedulaEscolar" TEXT NOT NULL,
-    "origen" TEXT NOT NULL,
-    "direcion" TEXT NOT NULL,
-    "telefono" TEXT NOT NULL,
-    "medicina" BOOLEAN NOT NULL DEFAULT false,
-    "alergia" BOOLEAN NOT NULL DEFAULT false,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- CreateTable
 CREATE TABLE "Curso" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "nombre" TEXT NOT NULL
@@ -101,6 +64,43 @@ CREATE TABLE "Notas" (
 );
 
 -- CreateTable
+CREATE TABLE "PerfilEstudiante" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "email" TEXT,
+    "isActive" BOOLEAN DEFAULT true,
+    "cedula" TEXT,
+    "cedulaEscolar" TEXT,
+    "origen" TEXT NOT NULL,
+    "direcion" TEXT NOT NULL,
+    "telefono" TEXT,
+    "medicina" BOOLEAN DEFAULT false,
+    "alergia" BOOLEAN DEFAULT false,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "Representante" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "madre" TEXT,
+    "cedulaM" TEXT,
+    "telefonoM" TEXT,
+    "emailM" TEXT,
+    "profesionM" TEXT,
+    "viveConEstuanteM" BOOLEAN,
+    "padre" TEXT,
+    "cedulaP" TEXT,
+    "telefonoP" TEXT,
+    "emailP" TEXT,
+    "profesionP" TEXT,
+    "viveConEstuanteP" BOOLEAN,
+    "numEmergencia" TEXT NOT NULL,
+    "parentesco" TEXT NOT NULL,
+    "nombreRepresentante" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
 CREATE TABLE "EstudianteEntity" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "id_perfil" INTEGER NOT NULL,
@@ -118,9 +118,6 @@ CREATE UNIQUE INDEX "Academico_cursoId_key" ON "Academico"("cursoId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Retiro_id_estudiante_key" ON "Retiro"("id_estudiante");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PerfilEstudiante_email_key" ON "PerfilEstudiante"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "EstudianteEntity_id_perfil_key" ON "EstudianteEntity"("id_perfil");

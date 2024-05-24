@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEstudianteDto } from './dto/create-estudiante.dto';
+import { Injectable, HttpStatus,ConflictException,NotFoundException,ExceptionFilter,HttpException, BadRequestException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { CreatePerfilEstudianteDto,CreateRepresentanteDto,CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 import { PrismaService } from '../../db-connections/prisma.service';
 
@@ -12,25 +12,38 @@ export class EstudianteService {
     ) {}
 
 
-  async create(createEstudianteDto: CreateEstudianteDto) {
+  async create(createPerfilEstudianteDto: CreatePerfilEstudianteDto, createRepresentanteDto: CreateRepresentanteDto) {
+    try{
+        const estudianteData = {
+          perfil: {
+            create: createPerfilEstudianteDto,
+          },
+          representante: {
+            create: createRepresentanteDto,
+          },
+        };
 
-
-    return 'This action adds a new estudiante';
+        return this.prisma.estudianteEntity.create({
+          data: estudianteData,
+        });
+    }catch(error){
+        throw new HttpException('Error creating student', 500);
+    }
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all estudiante`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} estudiante`;
   }
 
-  update(id: number, updateEstudianteDto: UpdateEstudianteDto) {
+  async update(id: number, updateEstudianteDto: UpdateEstudianteDto) {
     return `This action updates a #${id} estudiante`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} estudiante`;
   }
 }

@@ -60,7 +60,7 @@ model Curso{
 	id        Int      @id @default(autoincrement())
 	nombre String
 	academico   Academico?
-    asignatura Asignatura[]
+  asignatura Asignatura[]
 }
 
 model Asignatura{
@@ -81,37 +81,37 @@ model Notas {
 
 
 
-model PerfilEstudiante{
+ model PerfilEstudiante{
 	  id        Int      @id @default(autoincrement())
 	  name      String
-	  email     String   @unique
-	  isActive  Boolean  @default(true)
-	  cedula     String  
-	  cedulaEscolar     String  
-      origen 	String
+	  email     String?
+	  isActive  Boolean?  @default(true)
+	  cedula     String?  
+	  cedulaEscolar     String?  
+    origen 	String
 	  direcion String
-	  telefono String
-	  medicina Boolean @default(false)
-	  alergia Boolean  @default(false)
+	  telefono String?
+	  medicina Boolean? @default(false)
+	  alergia Boolean?  @default(false)
 	  estudiante EstudianteEntity?
 	  createdAt  DateTime @default(now())
 }
 
 model Representante{
 	id        Int      @id @default(autoincrement())
-	madre      String
-	cedulaM     String  
-	telefonoM String
-	emailM String
-	profesionM String
-	viveConEstuanteM Boolean
+	madre      String?
+	cedulaM     String? 
+	telefonoM String?
+	emailM String?
+	profesionM String?
+	viveConEstuanteM Boolean?
 
-	padre      String
-	cedulaP     String  
-	telefonoP String
-	emailP String
-	profesionP String
-	viveConEstuanteP Boolean
+	padre      String?
+	cedulaP     String?  
+	telefonoP String?
+	emailP String?
+	profesionP String?
+	viveConEstuanteP Boolean?
 
 	numEmergencia String
 	parentesco String // de la persona a llamar
@@ -137,5 +137,3 @@ model EstudianteEntity {
 
   createdAt  DateTime @default(now())
 }
-
-

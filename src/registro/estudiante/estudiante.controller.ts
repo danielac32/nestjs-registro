@@ -8,8 +8,9 @@ export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) {}
 
   @Post()
-  create(@Body() createEstudianteDto: CreateEstudianteDto) {
-    return this.estudianteService.create(createEstudianteDto);
+  async create(@Body() createEstudianteDto: CreateEstudianteDto) {
+    const { perfilEstudiante, representante } = createEstudianteDto;
+    return this.estudianteService.create(perfilEstudiante, representante);
   }
 
   @Get()
