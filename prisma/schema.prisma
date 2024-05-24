@@ -24,22 +24,58 @@ model userEntity {
 }
 
 
+model Curso{
+	id        Int      @id @default(autoincrement())
+	nombre String?
+	academico   Academico?
+    asignatura Asignatura[]
+}
+
+model Asignatura{
+    id        Int      @id @default(autoincrement())
+    name String
+    profesor String?
+    curso   Curso? @relation(fields: [cursoId], references: [id])
+    cursoId Int
+	notas Notas[]
+}
+
+model Notas {         
+    id        Int      @id @default(autoincrement())
+	valor Float
+	asignatura   Asignatura? @relation(fields: [asignaturaId], references: [id])
+    asignaturaId Int
+}
+
+model MateriasAprobadas{
+	id        Int      @id @default(autoincrement())
+	nombre String 
+	academico   Academico? @relation(fields: [academicoId], references: [id])
+    academicoId Int
+}
+model MateriasAplazadas{
+	id        Int      @id @default(autoincrement())
+	nombre String 
+	academico   Academico? @relation(fields: [academicoId], references: [id])
+    academicoId Int
+}
+
 model Academico {
   id        Int      @id @default(autoincrement())
   fechaEscolarDesde DateTime
   fechaEscolarHasta DateTime
-  plantelOrigen String 
-  repitiente Boolean @default(false)
-  asignacionCursa String 
-  asignacionPendiente String 
-  pruebaVocacional Boolean
-  tipoEstudiante String
+  plantelOrigen String?
+  repitiente Boolean? @default(false)
+  materiasAprobadas MateriasAprobadas[] //String //si paso liso no se llena
+  materiasAplazadas MateriasAplazadas[]  //String  //
+  pruebaVocacional Boolean?
+  tipoEstudiante String?
 
   curso   Curso? @relation(fields: [cursoId], references: [id])
-  cursoId Int @unique
+  cursoId Int? @unique
 
   estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
-  id_estudiante   Int
+  id_estudiante   Int?
   createdAt  DateTime @default(now())
 }
 
@@ -49,35 +85,13 @@ model Retiro{
 	motivo String
 	responsable String
 	cedulaResponsable String 
-	cargoResponsable String
+	cargoResponsable String?
 	estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
   	id_estudiante   Int @unique
 	createdAt  DateTime @default(now())
 }
 
 
-model Curso{
-	id        Int      @id @default(autoincrement())
-	nombre String
-	academico   Academico?
-  asignatura Asignatura[]
-}
-
-model Asignatura{
-    id        Int      @id @default(autoincrement())
-    name String
-    profesor String 
-    curso   Curso? @relation(fields: [cursoId], references: [id])
-    cursoId Int
-	notas Notas[]
-}
-
-model Notas {         
-    id        Int      @id @default(autoincrement())
-	  valor Float
-	  asignatura   Asignatura? @relation(fields: [asignaturaId], references: [id])
-    asignaturaId Int
-}
 
 
 
@@ -88,7 +102,7 @@ model Notas {
 	  isActive  Boolean?  @default(true)
 	  cedula     String?  
 	  cedulaEscolar     String?  
-    origen 	String
+      origen 	String
 	  direcion String
 	  telefono String?
 	  medicina Boolean? @default(false)

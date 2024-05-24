@@ -10,47 +10,16 @@ CREATE TABLE "userEntity" (
 );
 
 -- CreateTable
-CREATE TABLE "Academico" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "fechaEscolarDesde" DATETIME NOT NULL,
-    "fechaEscolarHasta" DATETIME NOT NULL,
-    "plantelOrigen" TEXT NOT NULL,
-    "repitiente" BOOLEAN NOT NULL DEFAULT false,
-    "asignacionCursa" TEXT NOT NULL,
-    "asignacionPendiente" TEXT NOT NULL,
-    "pruebaVocacional" BOOLEAN NOT NULL,
-    "tipoEstudiante" TEXT NOT NULL,
-    "cursoId" INTEGER NOT NULL,
-    "id_estudiante" INTEGER NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Academico_cursoId_fkey" FOREIGN KEY ("cursoId") REFERENCES "Curso" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Academico_id_estudiante_fkey" FOREIGN KEY ("id_estudiante") REFERENCES "EstudianteEntity" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
--- CreateTable
-CREATE TABLE "Retiro" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "representante" TEXT NOT NULL,
-    "motivo" TEXT NOT NULL,
-    "responsable" TEXT NOT NULL,
-    "cedulaResponsable" TEXT NOT NULL,
-    "cargoResponsable" TEXT NOT NULL,
-    "id_estudiante" INTEGER NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Retiro_id_estudiante_fkey" FOREIGN KEY ("id_estudiante") REFERENCES "EstudianteEntity" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
--- CreateTable
 CREATE TABLE "Curso" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "nombre" TEXT NOT NULL
+    "nombre" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Asignatura" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "profesor" TEXT NOT NULL,
+    "profesor" TEXT,
     "cursoId" INTEGER NOT NULL,
     CONSTRAINT "Asignatura_cursoId_fkey" FOREIGN KEY ("cursoId") REFERENCES "Curso" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -61,6 +30,51 @@ CREATE TABLE "Notas" (
     "valor" REAL NOT NULL,
     "asignaturaId" INTEGER NOT NULL,
     CONSTRAINT "Notas_asignaturaId_fkey" FOREIGN KEY ("asignaturaId") REFERENCES "Asignatura" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "MateriasAprobadas" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nombre" TEXT NOT NULL,
+    "academicoId" INTEGER NOT NULL,
+    CONSTRAINT "MateriasAprobadas_academicoId_fkey" FOREIGN KEY ("academicoId") REFERENCES "Academico" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "MateriasAplazadas" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nombre" TEXT NOT NULL,
+    "academicoId" INTEGER NOT NULL,
+    CONSTRAINT "MateriasAplazadas_academicoId_fkey" FOREIGN KEY ("academicoId") REFERENCES "Academico" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Academico" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "fechaEscolarDesde" DATETIME NOT NULL,
+    "fechaEscolarHasta" DATETIME NOT NULL,
+    "plantelOrigen" TEXT,
+    "repitiente" BOOLEAN DEFAULT false,
+    "pruebaVocacional" BOOLEAN,
+    "tipoEstudiante" TEXT,
+    "cursoId" INTEGER,
+    "id_estudiante" INTEGER,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Academico_cursoId_fkey" FOREIGN KEY ("cursoId") REFERENCES "Curso" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Academico_id_estudiante_fkey" FOREIGN KEY ("id_estudiante") REFERENCES "EstudianteEntity" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Retiro" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "representante" TEXT NOT NULL,
+    "motivo" TEXT NOT NULL,
+    "responsable" TEXT NOT NULL,
+    "cedulaResponsable" TEXT NOT NULL,
+    "cargoResponsable" TEXT,
+    "id_estudiante" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Retiro_id_estudiante_fkey" FOREIGN KEY ("id_estudiante") REFERENCES "EstudianteEntity" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ValidateNested,IsNotEmpty,IsBoolean,IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
+import { ValidateNested,IsInt,IsNotEmpty,IsBoolean,IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
 
 import { Type } from 'class-transformer';
 
@@ -135,21 +135,143 @@ export class CreatePerfilEstudianteDto {
 }
 
 
+export class MateriasAprobadasDto {
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+  
+  @IsOptional()
+  @IsInt()
+  academicoId?: number; // Optional if not creating a new approved subject within an academic record
+}
+
+export class MateriasAplazadasDto {
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+  
+  @IsOptional()
+  @IsInt()
+  academicoId?: number; // Optional if not creating a new failed subject within an academic record
+}
+
+export class AcademicoDto {
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  fechaEscolarDesde: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  fechaEscolarHasta: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  plantelOrigen: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  @IsOptional()
+  repitiente: boolean; // Optional, defaults to false
+
+ 
+  @ApiProperty()
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => MateriasAprobadasDto)
+  materiasAprobadas: MateriasAprobadasDto[]=[];
+
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => MateriasAplazadasDto)
+  materiasAplazadas: MateriasAplazadasDto[]=[];
+
+  @ApiProperty()
+  @IsBoolean()
+  @IsOptional()
+  pruebaVocacional: boolean; // Optional
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  tipoEstudiante: string;
+ 
+}
+
+
+export class RetiroDto {
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  representante: string; // Name of the representative
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  motivo: string; // Reason for withdrawal
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  responsable: string; // Name of the responsible person
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  cedulaResponsable: string; // Responsible person's ID
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  cargoResponsable: string; // Responsible person's position
+
+  @IsOptional()
+  @IsInt()
+  estudianteId?: number; // Optional, ID of the student (foreign key)
+}
+
 
 export class CreateEstudianteDto {
 
   @ApiProperty()
+  @IsOptional()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreatePerfilEstudianteDto)
   perfilEstudiante: CreatePerfilEstudianteDto;
   
   @ApiProperty()
+  @IsOptional()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreateRepresentanteDto)
   representante: CreateRepresentanteDto;
-
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => AcademicoDto)
+  academico: AcademicoDto;
+  
+  @ApiProperty()
+  @IsOptional()
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => RetiroDto)
+  retiro: RetiroDto;
 }
 
 

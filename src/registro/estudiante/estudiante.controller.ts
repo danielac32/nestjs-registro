@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EstudianteService } from './estudiante.service';
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
+import { AcademicoDto } from './dto/create-estudiante.dto';
 
 @Controller('estudiante')
 export class EstudianteController {
@@ -9,8 +10,8 @@ export class EstudianteController {
 
   @Post()
   async create(@Body() createEstudianteDto: CreateEstudianteDto) {
-    const { perfilEstudiante, representante } = createEstudianteDto;
-    return this.estudianteService.create(perfilEstudiante, representante);
+    const { perfilEstudiante, representante , academico } = createEstudianteDto;
+    return this.estudianteService.create(perfilEstudiante, representante ,academico);
   }
 
   @Get()
