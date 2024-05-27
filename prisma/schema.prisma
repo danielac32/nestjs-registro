@@ -26,9 +26,9 @@ model userEntity {
 
 model Curso{
 	id        Int      @id @default(autoincrement())
-	nombre String?
-	academico   Academico?
-    asignatura Asignatura[]
+	num Int?
+	//academico   Academico?
+  asignatura Asignatura[]
 }
 
 model Asignatura{
@@ -37,7 +37,7 @@ model Asignatura{
     profesor String?
     curso   Curso? @relation(fields: [cursoId], references: [id])
     cursoId Int
-	notas Notas[]
+	  notas Notas[]
 }
 
 model Notas {         
@@ -51,13 +51,13 @@ model MateriasAprobadas{
 	id        Int      @id @default(autoincrement())
 	nombre String 
 	academico   Academico? @relation(fields: [academicoId], references: [id])
-    academicoId Int
+  academicoId Int
 }
 model MateriasAplazadas{
 	id        Int      @id @default(autoincrement())
 	nombre String 
 	academico   Academico? @relation(fields: [academicoId], references: [id])
-    academicoId Int
+  academicoId Int
 }
 
 model Academico {
@@ -70,9 +70,9 @@ model Academico {
   materiasAplazadas MateriasAplazadas[]  //String  //
   pruebaVocacional Boolean?
   tipoEstudiante String?
-
-  curso   Curso? @relation(fields: [cursoId], references: [id])
-  cursoId Int? @unique
+  curso Int?
+  //curso   Curso? @relation(fields: [cursoId], references: [id])
+  //cursoId Int? @unique
 
   estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
   id_estudiante   Int?
@@ -81,10 +81,10 @@ model Academico {
 
 model Retiro{
 	id        Int      @id @default(autoincrement())
-	representante String     //nombre
-	motivo String
-	responsable String
-	cedulaResponsable String 
+	representante String?     //nombre
+	motivo String?
+	responsable String?
+	cedulaResponsable String? 
 	cargoResponsable String?
 	estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
   	id_estudiante   Int @unique
@@ -101,8 +101,8 @@ model Retiro{
 	  email     String?
 	  isActive  Boolean?  @default(true)
 	  cedula     String?  
-	  cedulaEscolar     String?  
-      origen 	String
+	  //cedulaEscolar     String?  
+      //origen 	String
 	  direcion String
 	  telefono String?
 	  medicina Boolean? @default(false)
@@ -127,8 +127,8 @@ model Representante{
 	profesionP String?
 	viveConEstuanteP Boolean?
 
-	numEmergencia String
-	parentesco String // de la persona a llamar
+	numEmergencia String?
+	parentesco String? // de la persona a llamar
 
 	nombreRepresentante String //que la inscribe
 	estudiante EstudianteEntity[]

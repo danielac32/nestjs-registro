@@ -12,7 +12,7 @@ CREATE TABLE "userEntity" (
 -- CreateTable
 CREATE TABLE "Curso" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "nombre" TEXT
+    "num" INTEGER
 );
 
 -- CreateTable
@@ -57,20 +57,19 @@ CREATE TABLE "Academico" (
     "repitiente" BOOLEAN DEFAULT false,
     "pruebaVocacional" BOOLEAN,
     "tipoEstudiante" TEXT,
-    "cursoId" INTEGER,
+    "curso" INTEGER,
     "id_estudiante" INTEGER,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Academico_cursoId_fkey" FOREIGN KEY ("cursoId") REFERENCES "Curso" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Academico_id_estudiante_fkey" FOREIGN KEY ("id_estudiante") REFERENCES "EstudianteEntity" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "Retiro" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "representante" TEXT NOT NULL,
-    "motivo" TEXT NOT NULL,
-    "responsable" TEXT NOT NULL,
-    "cedulaResponsable" TEXT NOT NULL,
+    "representante" TEXT,
+    "motivo" TEXT,
+    "responsable" TEXT,
+    "cedulaResponsable" TEXT,
     "cargoResponsable" TEXT,
     "id_estudiante" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -84,8 +83,6 @@ CREATE TABLE "PerfilEstudiante" (
     "email" TEXT,
     "isActive" BOOLEAN DEFAULT true,
     "cedula" TEXT,
-    "cedulaEscolar" TEXT,
-    "origen" TEXT NOT NULL,
     "direcion" TEXT NOT NULL,
     "telefono" TEXT,
     "medicina" BOOLEAN DEFAULT false,
@@ -108,8 +105,8 @@ CREATE TABLE "Representante" (
     "emailP" TEXT,
     "profesionP" TEXT,
     "viveConEstuanteP" BOOLEAN,
-    "numEmergencia" TEXT NOT NULL,
-    "parentesco" TEXT NOT NULL,
+    "numEmergencia" TEXT,
+    "parentesco" TEXT,
     "nombreRepresentante" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -126,9 +123,6 @@ CREATE TABLE "EstudianteEntity" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "userEntity_email_key" ON "userEntity"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Academico_cursoId_key" ON "Academico"("cursoId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Retiro_id_estudiante_key" ON "Retiro"("id_estudiante");

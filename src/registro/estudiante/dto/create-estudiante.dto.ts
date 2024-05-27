@@ -7,76 +7,91 @@ export class CreateRepresentanteDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   madre: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   cedulaM: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   telefonoM: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsOptional()
   @IsString()
+  @IsOptional()
   emailM: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   profesionM: string;
   
   @ApiProperty()
   @IsBoolean()
+  @IsOptional()
   viveConEstuanteM: boolean;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   padre: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   cedulaP: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   telefonoP: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsOptional()
   @IsString()
+  @IsOptional()
   emailP: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   profesionP: string;
   
   @ApiProperty()
   @IsBoolean()
+  @IsOptional()
   viveConEstuanteP: boolean;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   numEmergencia: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   parentesco: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   nombreRepresentante: string;
 }
 
@@ -89,8 +104,8 @@ export class CreatePerfilEstudianteDto {
   
   @ApiProperty()
   @IsNotEmpty()
-  @IsOptional()
   @IsEmail()
+  @IsOptional()
   email: string;
   
   @ApiProperty()
@@ -101,22 +116,25 @@ export class CreatePerfilEstudianteDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   cedula: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   cedulaEscolar: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   origen: string;
   
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  direcion: string;
+  direccion: string;
   
   @ApiProperty()
   @IsString()
@@ -175,18 +193,24 @@ export class AcademicoDto {
   @IsBoolean()
   @IsOptional()
   repitiente: boolean; // Optional, defaults to false
-
+  
+  @ApiProperty()
+  @IsOptional()
+  @IsInt()
+  curso: number; // Optional, ID of the student (foreign key)
  
   @ApiProperty()
-  @IsOptional()
-  @ValidateNested()
-  materiasAprobadas: MateriasAprobadasDto[];
+  //@IsOptional()
+  //@ValidateNested()
+  //@Type(() => MateriasAprobadasDto)
+  @IsString()
+  materiasAprobadas: string;
 
 
   @ApiProperty()
-  @IsOptional()
-  @ValidateNested()
-  materiasAplazadas: MateriasAplazadasDto[];
+  //@IsOptional()
+ @IsString()
+  materiasAplazadas: string;
 
   @ApiProperty()
   @IsBoolean()
@@ -271,3 +295,41 @@ export class CreateEstudianteDto {
 
 
 
+/*
+{
+  "perfilEstudiante": {
+    "name": "string",
+    "isActive": true,
+    "cedula": "string",
+    "cedulaEscolar": "string",
+    "origen": "string",
+    "direcion": "string",
+    "telefono": "string",
+    "medicina": true,
+    "alergia": true
+  },
+  "representante": {
+    "madre": "string",
+    "cedulaM": "string",
+    "telefonoM": "string",
+    "profesionM": "string",
+    "viveConEstuanteM": true,
+    "padre": "string",
+    "cedulaP": "string",
+    "telefonoP": "string",
+    "profesionP": "string",
+    "viveConEstuanteP": true,
+    "numEmergencia": "string",
+    "parentesco": "string",
+    "nombreRepresentante": "string"
+  },
+  "academico": {
+    "fechaEscolarDesde": "2024-05-24T16:16:50.786Z",
+    "fechaEscolarHasta": "2024-05-24T16:16:50.786Z",
+    "plantelOrigen": "string",
+    "repitiente": true,
+    "curso": 0,//curso en el que se va a inscribir
+    "pruebaVocacional": true,
+    "tipoEstudiante": "string"
+  }
+}*/
