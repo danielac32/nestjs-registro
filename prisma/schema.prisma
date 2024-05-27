@@ -103,7 +103,7 @@ model Retiro{
 	  cedula     String?  
 	  //cedulaEscolar     String?  
       //origen 	String
-	  direcion String
+	  direccion String
 	  telefono String?
 	  medicina Boolean? @default(false)
 	  alergia Boolean?  @default(false)

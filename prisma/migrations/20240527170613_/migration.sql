@@ -83,7 +83,7 @@ CREATE TABLE "PerfilEstudiante" (
     "email" TEXT,
     "isActive" BOOLEAN DEFAULT true,
     "cedula" TEXT,
-    "direcion" TEXT NOT NULL,
+    "direccion" TEXT NOT NULL,
     "telefono" TEXT,
     "medicina" BOOLEAN DEFAULT false,
     "alergia" BOOLEAN DEFAULT false,

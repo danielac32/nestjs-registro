@@ -5,32 +5,32 @@ import { Expose,Type } from 'class-transformer';
 
 export class CreateRepresentanteDto {
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   madre: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   cedulaM: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   telefonoM: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsOptional()
+  //@IsEmail()
   @IsString()
-  @IsOptional()
   emailM: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   profesionM: string;
@@ -41,32 +41,32 @@ export class CreateRepresentanteDto {
   viveConEstuanteM: boolean;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   padre: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   cedulaP: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   telefonoP: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsOptional()
   @IsString()
-  @IsOptional()
+  //@IsEmail()
   emailP: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   profesionP: string;
@@ -77,19 +77,19 @@ export class CreateRepresentanteDto {
   viveConEstuanteP: boolean;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   numEmergencia: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   parentesco: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   nombreRepresentante: string;
@@ -98,13 +98,14 @@ export class CreateRepresentanteDto {
 
 export class CreatePerfilEstudianteDto {
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   name: string;
   
   @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
+//  @IsNotEmpty()
+  //@IsEmail()
   @IsOptional()
   email: string;
   
@@ -114,25 +115,26 @@ export class CreatePerfilEstudianteDto {
   isActive: boolean;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   cedula: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   cedulaEscolar: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   @IsOptional()
   origen: string;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   direccion: string;
   
@@ -153,38 +155,22 @@ export class CreatePerfilEstudianteDto {
 }
 
 
-export class MateriasAprobadasDto {
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  nombre: string;
-  
-  }
-
-export class MateriasAplazadasDto {
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  nombre: string;
-  
-  }
-
 export class AcademicoDto {
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
+    @IsOptional()
   @IsString()
   fechaEscolarDesde: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   fechaEscolarHasta: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsOptional()
   @IsString()
   plantelOrigen: string;
@@ -201,16 +187,18 @@ export class AcademicoDto {
  
   @ApiProperty()
   @IsArray()
-  @ArrayNotEmpty()
-  @ArrayMinSize(1)
+  @IsOptional()
+  //@ArrayNotEmpty()
+  //@ArrayMinSize(1)
   @IsString({ each: true })
   materiasAprobadas: string[];
 
  
   @ApiProperty()
   @IsArray()
-  @ArrayNotEmpty()
-  @ArrayMinSize(1)
+  //@ArrayNotEmpty()
+  //@ArrayMinSize(1)
+  @IsOptional()
   @IsString({ each: true })
   materiasAplazadas: string[];
 
@@ -220,7 +208,8 @@ export class AcademicoDto {
   pruebaVocacional: boolean; // Optional
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   tipoEstudiante: string;
  
@@ -230,27 +219,27 @@ export class AcademicoDto {
 export class RetiroDto {
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   representante: string; // Name of the representative
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   motivo: string; // Reason for withdrawal
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   responsable: string; // Name of the responsible person
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsString()
   cedulaResponsable: string; // Responsible person's ID
 
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsOptional()
   @IsString()
   cargoResponsable: string; // Responsible person's position
@@ -265,20 +254,20 @@ export class CreateEstudianteDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreatePerfilEstudianteDto)
   perfilEstudiante: CreatePerfilEstudianteDto;
   
   @ApiProperty()
   @IsOptional()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreateRepresentanteDto)
   representante: CreateRepresentanteDto;
   
   @ApiProperty()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @IsOptional()
   @ValidateNested()
   @Type(() => AcademicoDto)
@@ -286,7 +275,7 @@ export class CreateEstudianteDto {
   
   @ApiProperty()
   @IsOptional()
-  @IsNotEmpty()
+//  @IsNotEmpty()
   @ValidateNested()
   @Type(() => RetiroDto)
   retiro: RetiroDto;

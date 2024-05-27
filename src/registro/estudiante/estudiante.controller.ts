@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,Query } from '@nestjs/common';
 import { EstudianteService } from './estudiante.service';
 import { CreateEstudianteDto,CreatePerfilEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
@@ -11,18 +11,21 @@ import {CreateCursoDto} from './dto/create-curso.dto';
 export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) {}
 
-  /*@Post()
+
+  @Get('defaultData')
+  defaultData() {
+    return this.estudianteService.defaultData();
+  }
+
+
+  @Post()
   async create(@Body() createEstudianteDto: CreateEstudianteDto) {
     //const { perfilEstudiante, representante , academico } = createEstudianteDto;
     return this.estudianteService.create(createEstudianteDto);
-  }*/
-  
-   @Post()
-  async create(@Body() createEstudianteDto: AcademicoDto) {
-    //const { perfilEstudiante, representante , academico } = createEstudianteDto;
-    return this.estudianteService.create(createEstudianteDto);
   }
+  
 
+  
   @Post('crear-curso')
   async createCurso(@Body() createCursoDto: CreateCursoDto) {
     //const { perfilEstudiante, representante , academico } = createEstudianteDto;
@@ -35,8 +38,8 @@ export class EstudianteController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.estudianteService.findOne(+id);
+  findOne(@Param('id') id: string,@Query('p') perfil: boolean,@Query('a') academico: boolean,@Query('r') representante: boolean) {
+    return this.estudianteService.findOne(id,perfil,academico,representante);
   }
 
   @Patch(':id')

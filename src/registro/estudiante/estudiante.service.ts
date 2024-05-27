@@ -3,6 +3,14 @@ import { CreatePerfilEstudianteDto,CreateRepresentanteDto,CreateEstudianteDto ,A
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 import {CreateCursoDto} from './dto/create-curso.dto';
 import { PrismaService } from '../../db-connections/prisma.service';
+import {
+  Perfil,
+  Representante,
+  Academico,
+  CrearEstudiante
+} from './interface/estudiante.interface'
+import {EstudiantesData} from './data/data-estudiante'
+import {EstudianteUtils} from './estudiante.utils'
 
 
 @Injectable()
@@ -10,12 +18,65 @@ export class EstudianteService {
 
   constructor(
     private prisma: PrismaService,
+    private utils: EstudianteUtils
     ) {}
 
   
   
 
+  async defaultData(){
+    try{
+        for (const estudiante of EstudiantesData) {
+             const { perfilEstudiante, representante, academico } = estudiante;
+             const createdPerfil = await this.prisma.perfilEstudiante.create({
+                data: {
+                  ...perfilEstudiante
+                },
+             });
 
+            const createdRepresentante = await this.prisma.representante.create({
+              data: {
+                ...representante,
+                estudiante: {
+                  create: [],
+                },
+              },
+            });
+            const {materiasAprobadas,materiasAplazadas,...academicoData}=academico;
+            const createdAcademico = await this.prisma.academico.create({
+              data: {
+                ...academicoData,
+                materiasAprobadas: {
+                  create: materiasAprobadas.map((materia) => ({
+                    nombre: materia,
+                  })),
+                },
+                materiasAplazadas: {
+                  create: materiasAplazadas.map((materia) => ({
+                    nombre: materia,
+                  })),
+                },
+              },
+            });
+
+            const createdEstudiante = await this.prisma.estudianteEntity.create({
+            data: {
+                id_perfil: createdPerfil.id,
+                id_representante: createdRepresentante.id,
+                recordAcademico: {
+                  connect: { id: createdAcademico.id },
+                },
+              },
+            });
+        }
+        return {
+          status:"ok"
+        }
+    }catch(error){
+          console.log(error)
+        throw new HttpException('Error creating dataDefault', 500);
+    }
+  }
 
   async createCurso(createCursoDto:CreateCursoDto){
       try{
@@ -48,64 +109,67 @@ export class EstudianteService {
             newCurso
           }
       }catch(error){
-
+        console.log(error)
+        throw new HttpException('Error creating curso', 500);
       }
   }
 
-async create(createEstudianteDto: AcademicoDto) {
-    
-    try{
-         console.log(createEstudianteDto)
-    }catch(error){
-        console.log(error)
-        throw new HttpException('Error creating student', 500);
-    }
-  }
 
-  /*
   async create(createEstudianteDto: CreateEstudianteDto) {
     
     try{
       const { perfilEstudiante, representante , academico } = createEstudianteDto;
       //console.log(perfilEstudiante)
-      const estudianteData = {
-        perfil: {
-          create: perfilEstudiante,
+      const createdPerfil = await this.prisma.perfilEstudiante.create({
+        data: {
+          ...perfilEstudiante
         },
-        representante: {
-          create: representante,
-        },
-      };
-      
-      const {materiasAprobadas,materiasAplazadas,...academicoData}=academico;
-
-      const res = await this.prisma.estudianteEntity.create({
-        data: estudianteData
       });
 
-      const newAcademico = await this.prisma.academico.create({
-         data: {
-            ...academicoData,
-            id_estudiante:res.id,
-            materiasAprobadas: {
-              create: materiasAprobadas,
-            },
-            materiasAplazadas: {
-              create: materiasAplazadas,
-            }
+      const createdRepresentante = await this.prisma.representante.create({
+        data: {
+          ...representante,
+          estudiante: {
+            create: [],
           },
+        },
       });
-      
-      
-      return {
-        estudiante:res,
-        record:newAcademico
-      }
+
+      const {materiasAprobadas,materiasAplazadas,...academicoData}=academico;
+      const createdAcademico = await this.prisma.academico.create({
+        data: {
+          ...academicoData,
+          materiasAprobadas: {
+            create: materiasAprobadas.map((materia) => ({
+              nombre: materia,
+            })),
+          },
+          materiasAplazadas: {
+            create: materiasAplazadas.map((materia) => ({
+              nombre: materia,
+            })),
+          },
+        },
+      });
+
+      const createdEstudiante = await this.prisma.estudianteEntity.create({
+      data: {
+          id_perfil: createdPerfil.id,
+          id_representante: createdRepresentante.id,
+          recordAcademico: {
+            connect: { id: createdAcademico.id },
+          },
+        },
+      });
+
+      return createdEstudiante;
+
+
     }catch(error){
         console.log(error)
         throw new HttpException('Error creating student', 500);
     }
-  }*/
+  }
 
 
 
@@ -124,13 +188,6 @@ async create(createEstudianteDto: AcademicoDto) {
             retiro:true
           }
         })
-        
-
-         
-        //const findCurso=all.map(recordAcademico => recordAcademico.curso);
-        
-
-
         return {
           all
         }
@@ -140,8 +197,44 @@ async create(createEstudianteDto: AcademicoDto) {
     }
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} estudiante`;
+
+
+
+  async findOne(id: string,perfil:boolean,academico:boolean,representante:boolean) {
+    try{
+        let response:any;
+        if (perfil && !academico && !representante) {
+          // Solo incluye el perfil
+           response = this.utils.perfil(id);
+        } else if (!perfil && academico && !representante) {
+          // Solo incluye el academico
+           response = this.utils.academico(id);
+        } else if (!perfil && !academico && representante) {
+          // Solo incluye el representante
+           response = this.utils.representante(id);
+        } else if (perfil && academico && !representante) {
+          // Incluye el perfil y el academico
+          response = this.utils.perfilAcademico(id);
+        } else if (perfil && !academico && representante) {
+          // Incluye el perfil y el representante
+          response = this.utils.academico(id);
+        } else if (!perfil && academico && representante) {
+          // Incluye el academico y el representante
+          response = this.utils.academicoRepresentante(id);
+        } else if (perfil && academico && representante) {
+          // Incluye el perfil, el academico y el representante
+          response = this.utils.all(id);
+        } else {
+          // Ninguna opción seleccionada
+          response = this.utils.perfil(id);
+        }
+        return{
+          response
+        }
+    }catch(error){
+      console.log(error)
+        throw new HttpException('Error findOne', 500);
+    }
   }
   
   async update(id: number, updateEstudianteDto: UpdateEstudianteDto) {
