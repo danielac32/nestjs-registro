@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ValidateNested,IsInt,IsNotEmpty,IsBoolean,IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
+import { ArrayNotEmpty, ArrayMinSize,ValidateNested,IsArray,IsInt,IsNotEmpty,IsBoolean,IsEmail, IsString, Matches, MaxLength, MinLength,IsOptional } from 'class-validator';
 
-import { Type } from 'class-transformer';
+import { Expose,Type } from 'class-transformer';
 
 export class CreateRepresentanteDto {
   @ApiProperty()
@@ -200,17 +200,19 @@ export class AcademicoDto {
   curso: number; // Optional, ID of the student (foreign key)
  
   @ApiProperty()
-  //@IsOptional()
-  //@ValidateNested()
-  //@Type(() => MateriasAprobadasDto)
-  @IsString()
-  materiasAprobadas: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  materiasAprobadas: string[];
 
-
+ 
   @ApiProperty()
-  //@IsOptional()
- @IsString()
-  materiasAplazadas: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(1)
+  @IsString({ each: true })
+  materiasAplazadas: string[];
 
   @ApiProperty()
   @IsBoolean()
