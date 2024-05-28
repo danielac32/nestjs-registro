@@ -199,10 +199,8 @@ export class EstudianteService {
 
 
   async findOne(id: string,perfil:number,academico:number,representante:number) {
-    try{
-        let response:any;
-  
-
+        let response:null | any;
+ 
         if (perfil && !academico && !representante) {
           // Solo incluye el perfil
            response = await this.utils.perfil(id);
@@ -228,13 +226,18 @@ export class EstudianteService {
           // Ninguna opción seleccionada
           response = await this.utils.perfil(id);
         }
-        return{
-          response
+       
+        if(response)return{
+           response,
+           mode:[perfil , academico , representante]
         }
-    }catch(error){
-      console.log(error)
+        
+        if(!response){
+              throw new HttpException('Entity not found', 404);
+        }
+ 
         throw new HttpException('Error findOne', 500);
-    }
+    
   }
   
   async update(id: number, updateEstudianteDto: UpdateEstudianteDto) {
