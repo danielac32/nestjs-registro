@@ -228,6 +228,26 @@ async getEstudianteWithProfilRepresent(id:string) {
       }
   }
 
+  async perfilRepresentante(id : string){
+      try{
+        const Estudiante = await this.prisma.estudianteEntity.findFirst({
+            where: {
+                    perfil: {
+                      cedula: id,
+                    },
+            },
+            include:{
+              perfil:true,
+              representante:true,
+            }
+        });
+        return Estudiante;
+      } catch (error) {
+        throw new HttpException('Error findOne Estudiante', 500);
+      }
+  }
+
+
 
   async	 academicoRepresentante(id : string){
   	  try{
@@ -332,6 +352,7 @@ async getEstudianteWithProfilRepresent(id:string) {
               perfil:true
             }
         });
+
         return Estudiante;
       } catch (error) {
         throw new HttpException('Error findOne Estudiante', 500);

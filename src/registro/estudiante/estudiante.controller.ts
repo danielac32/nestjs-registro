@@ -38,8 +38,8 @@ export class EstudianteController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string,@Query('p') perfil: boolean,@Query('a') academico: boolean,@Query('r') representante: boolean) {
-    return this.estudianteService.findOne(id,perfil,academico,representante);
+  findOne(@Param('id') id: string,@Query('p') perfil: string,@Query('a') academico: string,@Query('r') representante: string) {
+    return this.estudianteService.findOne(id,+perfil,+academico,+representante);
   }
 
   @Patch(':id')

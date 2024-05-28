@@ -29,9 +29,7 @@ export class EstudianteService {
         for (const estudiante of EstudiantesData) {
              const { perfilEstudiante, representante, academico } = estudiante;
              const createdPerfil = await this.prisma.perfilEstudiante.create({
-                data: {
-                  ...perfilEstudiante
-                },
+                data:perfilEstudiante
              });
 
             const createdRepresentante = await this.prisma.representante.create({
@@ -200,33 +198,35 @@ export class EstudianteService {
 
 
 
-  async findOne(id: string,perfil:boolean,academico:boolean,representante:boolean) {
+  async findOne(id: string,perfil:number,academico:number,representante:number) {
     try{
         let response:any;
+  
+
         if (perfil && !academico && !representante) {
           // Solo incluye el perfil
-           response = this.utils.perfil(id);
+           response = await this.utils.perfil(id);
         } else if (!perfil && academico && !representante) {
           // Solo incluye el academico
-           response = this.utils.academico(id);
+           response = await this.utils.academico(id);
         } else if (!perfil && !academico && representante) {
           // Solo incluye el representante
-           response = this.utils.representante(id);
+           response = await this.utils.representante(id);
         } else if (perfil && academico && !representante) {
           // Incluye el perfil y el academico
-          response = this.utils.perfilAcademico(id);
+          response = await this.utils.perfilAcademico(id);
         } else if (perfil && !academico && representante) {
           // Incluye el perfil y el representante
-          response = this.utils.academico(id);
+          response = await this.utils.perfilRepresentante(id);
         } else if (!perfil && academico && representante) {
           // Incluye el academico y el representante
-          response = this.utils.academicoRepresentante(id);
+          response = await this.utils.academicoRepresentante(id);
         } else if (perfil && academico && representante) {
           // Incluye el perfil, el academico y el representante
-          response = this.utils.all(id);
+          response = await this.utils.all(id);
         } else {
           // Ninguna opción seleccionada
-          response = this.utils.perfil(id);
+          response = await this.utils.perfil(id);
         }
         return{
           response
