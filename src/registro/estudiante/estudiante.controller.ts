@@ -17,6 +17,11 @@ export class EstudianteController {
     return this.estudianteService.defaultData();
   }
 
+  @Get(':id/cedula')
+  findById(@Param('id') id: string) {
+    return this.estudianteService.findById(id);
+  }
+
 
   @Post()
   async create(@Body() createEstudianteDto: CreateEstudianteDto) {

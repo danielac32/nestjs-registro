@@ -197,6 +197,16 @@ export class EstudianteService {
 
 
 
+  async findById(id: string){
+       const response = await this.utils.perfil(id);  
+       if(response)return{
+           response
+       }
+       if(!response){
+           throw new HttpException('Entity not found', 404);
+       } 
+  }
+
 
   async findOne(id: string,perfil:number,academico:number,representante:number) {
         let response:null | any;
