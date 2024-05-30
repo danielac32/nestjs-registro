@@ -212,7 +212,11 @@ export class AcademicoDto {
   @IsOptional()
   @IsString()
   tipoEstudiante: string;
- 
+  
+  @ApiProperty()
+  @IsOptional()
+  @IsInt()
+  id_estudiante: number;
 }
 
 

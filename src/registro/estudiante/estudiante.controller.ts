@@ -12,6 +12,16 @@ export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) {}
 
 
+
+  @Post('academico')
+  async createAcademico(@Body() academicoDto: AcademicoDto) {
+    //const { perfilEstudiante, representante , academico } = createEstudianteDto;
+    return this.estudianteService.createAcademico(academicoDto);
+  }
+  
+
+
+
   @Get('defaultData')
   defaultData() {
     return this.estudianteService.defaultData();

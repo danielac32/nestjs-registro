@@ -23,6 +23,34 @@ export class EstudianteService {
 
   
   
+  async createAcademico(academicoDto: AcademicoDto){
+      try{
+
+            const {materiasAprobadas,materiasAplazadas,...academicoData}=academicoDto;
+            const createdAcademico = await this.prisma.academico.create({
+            data: {
+                ...academicoData,
+                materiasAprobadas: {
+                  create: materiasAprobadas.map((materia) => ({
+                    nombre: materia,
+                  })),
+                },
+                materiasAplazadas: {
+                  create: materiasAplazadas.map((materia) => ({
+                    nombre: materia,
+                  })),
+                },
+              },
+            });
+            return {
+              createdAcademico
+            }
+      }catch(error){
+        console.log(error)
+        throw new HttpException('Error createAcademico', 500);
+      }
+  }
+
 
   async defaultData(){
     try{
