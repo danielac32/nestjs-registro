@@ -42,11 +42,11 @@ import {
       fechaEscolarHasta: '2024-05-24T16:16:50.786Z',
       plantelOrigen: 'Colegio Nacional',
       repitiente: false,
-      curso: 10,
+      curso: 1,
       materiasAprobadas: ['Matemáticas', 'Lengua'],
       materiasAplazadas: ['Física', 'Química'],
       pruebaVocacional: true,
-      tipoEstudiante: 'Regular'
+      tipoEstudiante: 'Nuevo Ingreso'
     }
   },
   {
@@ -84,11 +84,11 @@ import {
       fechaEscolarHasta: '2024-05-24T16:16:50.786Z',
       plantelOrigen: 'Instituto Privado',
       repitiente: false,
-      curso: 11,
+      curso: 2,
       materiasAprobadas: ['Biología', 'Historia'],
       materiasAplazadas: ['Matemáticas', 'Química'],
       pruebaVocacional: true,
-      tipoEstudiante: 'Regular'
+      tipoEstudiante: 'Nuevo Ingreso'
     }
   },
   {
@@ -126,11 +126,11 @@ import {
       fechaEscolarHasta: '2024-05-24T16:16:50.786Z',
       plantelOrigen: 'Liceo Bolivariano',
       repitiente: false,
-      curso: 12,
+      curso: 3,
       materiasAprobadas: ['Geografía', 'Inglés'],
       materiasAplazadas: ['Química', 'Física'],
       pruebaVocacional: true,
-      tipoEstudiante: 'Regular'
+      tipoEstudiante: 'Nuevo Ingreso'
     }
   },
   {
@@ -168,11 +168,11 @@ import {
       fechaEscolarHasta: '2024-05-24T16:16:50.786Z',
       plantelOrigen: 'Unidad Educativa',
       repitiente: false,
-      curso: 9,
+      curso: 4,
       materiasAprobadas: ['Educación Física', 'Ciencias'],
       materiasAplazadas: ['Matemáticas', 'Historia'],
       pruebaVocacional: true,
-      tipoEstudiante: 'Regular'
+      tipoEstudiante: 'Nuevo Ingreso'
     }
   }
 ];

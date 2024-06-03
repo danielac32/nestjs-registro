@@ -26,9 +26,9 @@ export class CreateAsignaturaDto {
 
 export class CreateCursoDto {
   @ApiProperty()
-//  @IsNumber()
-//  @IsNotEmpty()
-//  num: number;
+  @IsNumber()
+  @IsNotEmpty()
+  num: number;
   
   @ApiProperty()
   @IsOptional()

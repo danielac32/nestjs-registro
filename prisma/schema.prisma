@@ -27,7 +27,6 @@ model userEntity {
 model Curso{
 	id        Int      @id @default(autoincrement())
 	num Int?
-	//academico   Academico?
   asignatura Asignatura[]
 }
 
@@ -71,9 +70,6 @@ model Academico {
   pruebaVocacional Boolean?
   tipoEstudiante String?
   curso Int?
-  //curso   Curso? @relation(fields: [cursoId], references: [id])
-  //cursoId Int? @unique
-
   estudiante      EstudianteEntity? @relation(fields: [id_estudiante], references: [id])
   id_estudiante   Int?
   createdAt  DateTime @default(now())
